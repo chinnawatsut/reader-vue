@@ -16,6 +16,7 @@
 
 <script>
 import AuthAPI from "../services/auth.api";
+import LocalStorage from "../services/localStorage"
 export default {
   data() {
     return {
@@ -31,11 +32,12 @@ export default {
       };
       AuthAPI.login(credential)
         .then(response => {
-          localStorage.setItem("token", response.data.token)
+          console.log(response)
+          LocalStorage.setToken(response.data.token)
           this.$router.push({ name: "home" })
         })
         .catch(err => {
-          console.log(err.response);
+          console.log(err);
         });
     }
   }
