@@ -6,7 +6,7 @@
         :key="index"
         :class="{ 'highlight': review.score > 6 }"
         class="list-group-item"
-      >{{review.title}} ({{review.score}}/10)</li>
+      >{{review.title}} - {{review.date | year}} ({{review.score}}/10)</li>
     </ul>
     <form class @submit.prevent="createBook">
       <base-input id="title" label="Title" type="text" v-model="title" />
