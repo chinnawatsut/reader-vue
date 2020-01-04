@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import CreateReview from "../views/CreateReview"
+import ShowReview from "../views/ShowReview"
 import localStorage from '../services/localStorage';
 
 Vue.use(VueRouter);
@@ -20,6 +21,12 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login
+  },
+  {
+    path: "/reviews/:reviewId/view",
+    name: "showReview",
+    component: ShowReview,
+    props: true,
   },
   {
     path: "/reviews/create",

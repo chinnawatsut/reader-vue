@@ -6,7 +6,9 @@
         :key="index"
         :class="{ 'highlight': review.score > 6 }"
         class="list-group-item"
-      >{{review.title}} - {{review.date | year}} ({{review.score}}/10)</li>
+      >
+        <router-link :to="{ name: 'showReview', params: { reviewId: review._id }}">{{review.title}} - {{review.date | year}} ({{review.score}}/10)</router-link>
+      </li>
     </ul>
     <router-link to="/reviews/create">
       <button class="btn btn-primary mt-2">Write a review</button>
