@@ -7,7 +7,12 @@
         :class="{ 'highlight': review.score > 6 }"
         class="list-group-item"
       >
-        <router-link :to="{ name: 'showReview', params: { reviewId: review._id }}">{{review.title}} - {{review.date | year}} ({{review.score}}/10)</router-link>
+        <router-link :to="{ name: 'showReview', params: { reviewId: review._id }}">
+          {{review.title}} - {{review.date | year}} ({{review.score}}/10)
+        </router-link>
+        <router-link :to="{ name: 'editReview', params: { reviewId: review._id }}">
+          <button class="btn btn-info">Edit</button>
+        </router-link>
       </li>
     </ul>
     <router-link to="/reviews/create">
