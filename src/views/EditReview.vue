@@ -8,37 +8,20 @@
       <base-select id="score" label="Score" v-model="review.score" :customOptions="true">
         <option v-for="(score,index) in 10" :value="score" :key="index">{{ score}}</option>
       </base-select>
-      <button class="btn btn-primary" type="submit">create</button>
+      <button class="btn btn-primary" type="submit">edit</button>
     </form>
   </div>
 </template>
 
 <script>
+import { fetchReviewMixin } from '../mixins/fetchReviewMixin'
 import BaseComponents from "../components/base/BaseComponents";
-import ReviewsApi from '../services/reviews.api'
 
 export default {
   components: {
     ...BaseComponents
   },
-  props: ['reviewId'],
-  data() {
-    return {
-      review: null
-    };
-  },
-  mounted() {
-    this.fetchReview(this.reviewId);
-  },
-  methods: {
-    fetchReview(id) {
-      ReviewsApi.getReivewByID(id).then(response => {
-        let review = response.data
-        review.date = review.date.replace(/\//g, '-')
-        this.review = review
-      });
-    }
-  }
+  mixins: [fetchReviewMixin],
 };
 </script>
 

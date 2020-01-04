@@ -11,25 +11,10 @@
 </template>
 
 <script>
-import ReviewsApi from '../services/reviews.api'
+import { fetchReviewMixin } from '../mixins/fetchReviewMixin'
 
 export default {
-  props: ['reviewId'],
-  data() {
-    return {
-      review: null,
-    }
-  },
-  mounted() {
-    this.fetchReview(this.reviewId)
-  },
-  methods: {
-    fetchReview(id) {
-      ReviewsApi.getReivewByID(id).then(response => {
-        this.review = response.data
-      })
-    }
-  }
+  mixins: [fetchReviewMixin],
 }
 </script>
 
