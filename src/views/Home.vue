@@ -62,6 +62,11 @@ export default {
       readDate: null,
     };
   },
+  created() {
+    this.fetchReviews();
+  },
+  mounted() {
+  },
   methods: {
     createBook() {
       const review = {
