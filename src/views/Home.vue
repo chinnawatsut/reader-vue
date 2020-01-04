@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <button @click="fetchReviews">fetch reviews</button>
     <ul class="list-group">
       <li
         v-for="(review,index) in reviews"
@@ -10,47 +9,26 @@
       >{{review.title}} ({{review.score}}/10)</li>
     </ul>
     <form class @submit.prevent="createBook">
-      <div class="form-group row">
-        <label for="title">Title</label>
-        <input class="form-control" id="title" v-model="title" type="text" />
-      </div>
-
-      <div class="form-group row">
-        <label for="context">Context</label>
-        <input class="form-control" id="context" v-model="context" type="text" />
-      </div>
-
-      <div class="form-group row">
-        <label for="imgUrl">Image url</label>
-        <input class="form-control" id="imgUrl" v-model="imgUrl" type="text" />
-      </div>
-
-      <div class="form-group row">
-        <label for="readDate">Read date</label>
-        <input class="form-control" type="date" id="readDate" v-model="readDate">
-      </div>
-
-      <div class="form-group row">
-        <label for="scoreSelection">Score</label>
-        <select class="form-control" v-model="score" id="scoreSelection">
-          <option v-for="(score,index) in 10" :value="score" :key="index">{{ score}}</option>
-        </select>
-      </div>
+      <base-input id="title" label="Title" type="text" v-model="title" />
+      <base-input id="context" label="Context" type="text" v-model="context" />
+      <base-input id="imgUrl" label="Image Url" type="text" v-model="imgUrl" />
+      <base-input id="date" label="Read date" type="date" v-model="readDate" />
+      <base-select id="score" label="Score" v-model="score" :customOptions="true">
+        <option v-for="(score,index) in 10" :value="score" :key="index">{{ score}}</option>
+      </base-select>
       <button class="btn btn-primary" type="submit">create</button>
     </form>
-
-    <div>
-      <router-link to="/login">Login</router-link>
-    </div>
   </div>
 </template>
 
 <script>
-import ReviewAPI from '../services/reviews.api'
-
+import ReviewAPI from "../services/reviews.api";
+import BaseComponents from "../components/base/BaseComponents";
 export default {
   name: "home",
-  components: {},
+  components: {
+    ...BaseComponents
+  },
   data() {
     return {
       reviews: [],
@@ -59,14 +37,13 @@ export default {
       imgUrl: "",
       score: 10,
       highCount: 0,
-      readDate: null,
+      readDate: null
     };
   },
   created() {
     this.fetchReviews();
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     createBook() {
       const review = {
@@ -77,41 +54,23 @@ export default {
         date: this.readDate
       };
 
-      ReviewAPI.createReview(review).then(response => {
-        console.log(response)
-      })
-      .catch(e => {
-        console.log(e.response)
-      })
+      ReviewAPI.createReview(review)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(e => {
+          console.log(e.response);
+        });
       this.title = "";
       this.score = 10;
       this.imgUrl = "";
       this.readDate = null;
       this.context = "";
     },
-    highScore() {
-      console.log("method: highScore");
-      return this.reviews.filter(b => b.score > 6).length;
-    },
     fetchReviews() {
       ReviewAPI.getReviews().then(response => {
         this.reviews = response.data;
       });
-    }
-  },
-  computed: {
-    highScoreCount() {
-      console.log("computed: highScoreCount");
-      return this.reviews.filter(b => b.score > 6).length;
-    }
-  },
-  watch: {
-    reviews: {
-      immediate: true,
-      handler() {
-        console.log("watch: reviews");
-        this.highCount = this.reviews.filter(b => b.score > 6).length;
-      }
     }
   }
 };

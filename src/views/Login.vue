@@ -2,14 +2,8 @@
   <div>
     <div class="container">
       <form class="login-form" @submit.prevent="login">
-        <div class="form-group row">
-          <label for="username">Username</label>
-          <input class="form-control" id="username" v-model="username" type="text" />
-        </div>
-        <div class="form-group row">
-          <label for="password">Password</label>
-          <input class="form-control" id="password" v-model="password" type="password" />
-        </div>
+        <BaseInput id="username" label="Username" v-model="username" type="text" placeholder="username"/>
+        <BaseInput id="password" label="Password" v-model="password" type="password" placeholder="****" />
         <button class="btn btn-primary">Login</button>
       </form>
     </div>

@@ -8,10 +8,15 @@ import VueAxios from 'vue-axios'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// import BaseInput from './components/base/BaseInput'
+
 Vue.config.productionTip = false;
+
 
 Vue.use(BootstrapVue)
 Vue.use(VueAxios, axios)
+
+// Vue.component('BaseInput', BaseInput)
 
 new Vue({
   router,
