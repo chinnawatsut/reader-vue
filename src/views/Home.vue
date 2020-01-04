@@ -38,6 +38,10 @@
       </div>
       <button class="btn btn-primary" type="submit">create</button>
     </form>
+
+    <div>
+      <router-link to="/login">Login</router-link>
+    </div>
   </div>
 </template>
 
