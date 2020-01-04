@@ -13,9 +13,7 @@ export const fetchReviewMixin = {
   methods: {
     fetchReview(id) {
       ReviewsApi.getReivewByID(id).then(response => {
-        let review = response.data
-        review.date = review.date.replace(/\//g, '-')
-        this.review = review
+        this.review = response.data
       });
     }
   }
