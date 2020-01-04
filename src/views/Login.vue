@@ -2,8 +2,8 @@
   <div>
     <div class="container">
       <form class="login-form" @submit.prevent="login">
-        <BaseInput id="username" label="Username" v-model="username" type="text" placeholder="username"/>
-        <BaseInput id="password" label="Password" v-model="password" type="password" placeholder="****" />
+        <base-input id="username" label="Username" v-model="username" type="text" placeholder="username"/>
+        <base-input id="password" label="Password" v-model="password" type="password" placeholder="****" />
         <button class="btn btn-primary">Login</button>
       </form>
     </div>
@@ -13,7 +13,11 @@
 <script>
 import AuthAPI from "../services/auth.api";
 import LocalStorage from "../services/localStorage";
+import BaseComponent from '../components/base/BaseComponents'
 export default {
+  components: {
+    ...BaseComponent
+  },
   data() {
     return {
       username: "",

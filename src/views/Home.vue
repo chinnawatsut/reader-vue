@@ -24,6 +24,9 @@
 <script>
 import ReviewAPI from "../services/reviews.api";
 import BaseComponents from "../components/base/BaseComponents";
+import AuthApi from "../services/auth.api";
+import eventBus from "../eventBus";
+
 export default {
   name: "home",
   components: {
@@ -42,6 +45,7 @@ export default {
   },
   created() {
     this.fetchReviews();
+    this.getProfile();
   },
   mounted() {},
   methods: {
@@ -71,6 +75,15 @@ export default {
       ReviewAPI.getReviews().then(response => {
         this.reviews = response.data;
       });
+    },
+    getProfile() {
+      AuthApi.getProfile()
+        .then(({ data }) => {
+          eventBus.$emit("on-signed-in", data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
