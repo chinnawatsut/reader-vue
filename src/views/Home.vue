@@ -68,7 +68,12 @@ export default {
         date: this.readDate
       };
 
-      this.reviews.push(review);
+      ReviewAPI.createReview(review).then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e.response)
+      })
       this.title = "";
       this.score = 10;
       this.imgUrl = "";
