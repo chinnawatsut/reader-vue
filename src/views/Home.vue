@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <ul class="list-group">
+    <ul class="list-group list-wrapper">
       <li
         v-for="(review,index) in reviews"
         :key="index"
@@ -8,39 +8,22 @@
         class="list-group-item"
       >{{review.title}} - {{review.date | year}} ({{review.score}}/10)</li>
     </ul>
-    <form class @submit.prevent="createBook">
-      <base-input id="title" label="Title" type="text" v-model="title" />
-      <base-input id="context" label="Context" type="text" v-model="context" />
-      <base-input id="imgUrl" label="Image Url" type="text" v-model="imgUrl" />
-      <base-input id="date" label="Read date" type="date" v-model="readDate" />
-      <base-select id="score" label="Score" v-model="score" :customOptions="true">
-        <option v-for="(score,index) in 10" :value="score" :key="index">{{ score}}</option>
-      </base-select>
-      <button class="btn btn-primary" type="submit">create</button>
-    </form>
+    <router-link to="/reviews/create">
+      <button class="btn btn-primary mt-2">Write a review</button>
+    </router-link>
   </div>
 </template>
 
 <script>
 import ReviewAPI from "../services/reviews.api";
-import BaseComponents from "../components/base/BaseComponents";
 import AuthApi from "../services/auth.api";
 import eventBus from "../eventBus";
 
 export default {
   name: "home",
-  components: {
-    ...BaseComponents
-  },
   data() {
     return {
-      reviews: [],
-      title: "",
-      context: "",
-      imgUrl: "",
-      score: 10,
-      highCount: 0,
-      readDate: null
+      reviews: []
     };
   },
   created() {
@@ -49,28 +32,6 @@ export default {
   },
   mounted() {},
   methods: {
-    createBook() {
-      const review = {
-        title: this.title,
-        context: this.context,
-        imgUrl: this.imgUrl,
-        score: this.score,
-        date: this.readDate
-      };
-
-      ReviewAPI.createReview(review)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(e => {
-          console.log(e.response);
-        });
-      this.title = "";
-      this.score = 10;
-      this.imgUrl = "";
-      this.readDate = null;
-      this.context = "";
-    },
     fetchReviews() {
       ReviewAPI.getReviews().then(response => {
         this.reviews = response.data;
@@ -96,5 +57,8 @@ img {
 }
 .highlight {
   color: #41b883;
+}
+.list-wrapper {
+  margin-top: 30px;
 }
 </style>

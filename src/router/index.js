@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import CreateReview from "../views/CreateReview"
 import localStorage from '../services/localStorage';
 
 Vue.use(VueRouter);
@@ -19,6 +20,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login
+  },
+  {
+    path: "/reviews/create",
+    name: "create-review",
+    component: CreateReview
   }
 ];
 
