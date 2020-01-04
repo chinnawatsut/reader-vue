@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import ReviewAPI from '../services/reviews.api'
+
 export default {
   name: "home",
   components: {},
@@ -78,7 +80,7 @@ export default {
       return this.reviews.filter(b => b.score > 6).length;
     },
     fetchReviews() {
-      this.axios.get("http://localhost:3000/reviews").then(response => {
+      ReviewAPI.getReviews().then(response => {
         this.reviews = response.data;
       });
     }
