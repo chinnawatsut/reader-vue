@@ -39,7 +39,10 @@ const routes = [
   {
     path: "/reviews/create",
     name: "create-review",
-    component: CreateReview
+    component: CreateReview,
+    meta: {
+      isAuth: true,
+    }
   }
 ];
 

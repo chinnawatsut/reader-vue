@@ -25,6 +25,7 @@
 import ReviewAPI from "../services/reviews.api";
 import AuthApi from "../services/auth.api";
 import eventBus from "../eventBus";
+import localStorage from '../services/localStorage';
 
 export default {
   name: "home",
@@ -50,7 +51,10 @@ export default {
           eventBus.$emit("on-signed-in", data);
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.status === 401) {
+            localStorage.removeToken()
+            location.reload()
+          }
         });
     }
   }
