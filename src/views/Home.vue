@@ -1,27 +1,38 @@
 <template>
   <div class="container">
-    <h2>Total: {{ books.length }}</h2>
-    <h2>HighScore: {{ highScoreCount }}</h2>
-    <h2>HighCount: {{ highCount}}</h2>
-    <h2>highScore: {{ highScore() }}</h2>
-
-    <h3>LowScore: {{ books.length - highScoreCount }}</h3>
+    <button @click="fetchReviews">fetch reviews</button>
     <ul class="list-group">
       <li
-        v-for="(book,index) in books"
+        v-for="(review,index) in reviews"
         :key="index"
-        :class="{ 'highlight': book.score > 6 }"
+        :class="{ 'highlight': review.score > 6 }"
         class="list-group-item"
-      >{{book.name}} ({{book.score}}/10)</li>
+      >{{review.title}} ({{review.score}}/10)</li>
     </ul>
     <form class @submit.prevent="createBook">
       <div class="form-group row">
-        <label for="name">Name</label>
-        <input class="form-control" id="name" v-model="name" type="text" />
+        <label for="title">Title</label>
+        <input class="form-control" id="title" v-model="title" type="text" />
       </div>
+
       <div class="form-group row">
-        <label for="score">Score</label>
-        <select class="form-control" v-model="score" name="score" id="score">
+        <label for="context">Context</label>
+        <input class="form-control" id="context" v-model="context" type="text" />
+      </div>
+
+      <div class="form-group row">
+        <label for="imgUrl">Image url</label>
+        <input class="form-control" id="imgUrl" v-model="imgUrl" type="text" />
+      </div>
+
+      <div class="form-group row">
+        <label for="readDate">Read date</label>
+        <input class="form-control" type="date" id="readDate" v-model="readDate">
+      </div>
+
+      <div class="form-group row">
+        <label for="scoreSelection">Score</label>
+        <select class="form-control" v-model="score" id="scoreSelection">
           <option v-for="(score,index) in 10" :value="score" :key="index">{{ score}}</option>
         </select>
       </div>
@@ -36,43 +47,54 @@ export default {
   components: {},
   data() {
     return {
-      books: [
-        { name: "Harry Potter", score: 7 },
-        { name: "Percy", score: 9 },
-        { name: "Titanic", score: 6 }
-      ],
-      name: "",
+      reviews: [],
+      title: "",
+      context: "",
+      imgUrl: "",
       score: 10,
-      highCount: 0
+      highCount: 0,
+      readDate: null,
     };
   },
   methods: {
     createBook() {
-      const book = {
-        name: this.name,
-        score: this.score
+      const review = {
+        title: this.title,
+        context: this.context,
+        imgUrl: this.imgUrl,
+        score: this.score,
+        date: this.readDate
       };
-      this.books.push(book);
-      this.name = "";
+
+      this.reviews.push(review);
+      this.title = "";
       this.score = 10;
+      this.imgUrl = "";
+      this.readDate = null;
+      this.context = "";
     },
     highScore() {
       console.log("method: highScore");
-      return this.books.filter(b => b.score > 6).length;
+      return this.reviews.filter(b => b.score > 6).length;
+    },
+    fetchReviews() {
+      this.axios.get("http://localhost:3000/reviews").then(response => {
+        this.reviews = response.data;
+      });
     }
   },
   computed: {
     highScoreCount() {
       console.log("computed: highScoreCount");
-      return this.books.filter(b => b.score > 6).length;
+      return this.reviews.filter(b => b.score > 6).length;
     }
   },
   watch: {
-    books: {
+    reviews: {
       immediate: true,
       handler() {
-        console.log("watch: books");
-        this.highCount = this.books.filter(b => b.score > 6).length;
+        console.log("watch: reviews");
+        this.highCount = this.reviews.filter(b => b.score > 6).length;
       }
     }
   }
@@ -83,9 +105,6 @@ export default {
 img {
   width: 50px;
   height: 50px;
-}
-.name {
-  color: brown;
 }
 .highlight {
   color: #41b883;
