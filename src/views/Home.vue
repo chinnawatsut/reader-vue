@@ -23,9 +23,6 @@
 
 <script>
 import ReviewAPI from "../services/reviews.api";
-import AuthApi from "../services/auth.api";
-import eventBus from "../eventBus";
-import localStorage from '../services/localStorage';
 
 export default {
   name: "home",
@@ -46,16 +43,7 @@ export default {
       });
     },
     getProfile() {
-      AuthApi.getProfile()
-        .then(({ data }) => {
-          eventBus.$emit("on-signed-in", data);
-        })
-        .catch(err => {
-          if (err.response.status === 401) {
-            localStorage.removeToken()
-            location.reload()
-          }
-        });
+      this.$store.dispatch('getProfile')
     }
   }
 };

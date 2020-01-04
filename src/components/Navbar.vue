@@ -13,25 +13,25 @@
 </template>
 
 <script>
-import eventBus from "../eventBus";
 import localStorage from "../services/localStorage";
+import { mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      profile: null
-    };
-  },
-  mounted() {
-    eventBus.$on("on-signed-in", this.onSignedIn);
-  },
   methods: {
-    onSignedIn(profile) {
-      this.profile = profile;
-    },
     logout() {
       localStorage.removeToken();
       location.reload();
     }
+  },
+  computed: {
+    // profile() {
+    //   return this.$store.state.profile
+    // },
+    // ...mapState({
+    //   profile: state => state.profile,
+    //   // profile: 'profile',
+    // })
+    ...mapState(['profile'])
   }
 };
 </script>

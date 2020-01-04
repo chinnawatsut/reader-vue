@@ -2,8 +2,21 @@
   <div>
     <div class="container">
       <form class="login-form" @submit.prevent="login">
-        <base-input id="username" label="Username" v-model="username" type="text" placeholder="username"/>
-        <base-input id="password" label="Password" v-model="password" type="password" placeholder="****" />
+        <base-input
+          id="username"
+          label="Username"
+          v-model="username"
+          type="text"
+          placeholder="username"
+        />
+        <base-input
+          id="password"
+          label="Password"
+          v-model="password"
+          type="password"
+          placeholder="****"
+        />
+        <p v-if="error">{{error}}</p>
         <button class="btn btn-primary">Login</button>
       </form>
     </div>
@@ -11,9 +24,8 @@
 </template>
 
 <script>
-import AuthAPI from "../services/auth.api";
-import LocalStorage from "../services/localStorage";
-import BaseComponent from '../components/base/BaseComponents'
+import BaseComponent from "../components/base/BaseComponents";
+
 export default {
   components: {
     ...BaseComponent
@@ -21,7 +33,8 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      error: ""
     };
   },
   methods: {
@@ -30,14 +43,13 @@ export default {
         login: this.username,
         password: this.password
       };
-      AuthAPI.login(credential)
-        .then(response => {
-          console.log(response);
-          LocalStorage.setToken(response.data.token);
+      this.$store
+        .dispatch("login", credential)
+        .then(() => {
           this.$router.push({ name: "home" });
         })
         .catch(err => {
-          console.log(err.response.data);
+          this.error = err.response.data;
         });
     }
   }
@@ -46,15 +58,15 @@ export default {
 
 <style lang="css" scoped>
 .login-form {
-   -webkit-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
   padding: 30px;
   width: 90%;
   max-width: 450px;
   position: relative;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
   margin: auto;
   margin-top: 200px;
