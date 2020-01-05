@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    updateValue() {
+    updateValue(event) {
       this.$emit("input", event.target.value);
     }
   }
