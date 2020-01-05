@@ -2,10 +2,13 @@ import Vue from "vue";
 import Vuex from "vuex";
 import AuthApi from "../services/auth.api";
 import LocalStorage from '../services/localStorage';
-
+import * as sample from './modules/sample'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  modules: {
+    sample
+  },
   state: {
     profile: null,
     token: ''
@@ -44,6 +47,5 @@ export default new Vuex.Store({
         return Promise.reject(err)
       });
     }
-  },
-  modules: {}
+  }
 });
