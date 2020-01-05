@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import DateFilters from './filters/dateFilters'
+import localStorage from './services/localStorage';
 Vue.filter('year', DateFilters.year)
 
 Vue.config.productionTip = false;
@@ -21,5 +22,11 @@ Vue.use(Vuelidate)
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted() {
+    const token = localStorage.getToken()
+    if (token) {
+      this.$store.commit('SET_TOKEN', token)
+    }
+  },
 }).$mount("#app");
