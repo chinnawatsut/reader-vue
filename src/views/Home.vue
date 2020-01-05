@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <ul v-show="false" class="list-group list-wrapper">
+    <ul class="list-group list-wrapper">
       <li
         v-for="(review,index) in reviews"
         :key="index"
@@ -15,16 +15,9 @@
         </router-link>
       </li>
     </ul>
-    <router-link  v-show="false"  to="/reviews/create">
+    <router-link to="/reviews/create">
       <button class="btn btn-primary mt-2">Write a review</button>
     </router-link>
-    <div>
-      <div>all: {{ allNumber }}</div>
-      <div>all: {{ numbers }}</div>
-      <div>greater 20: {{ greaterNumber }}</div>
-      <input type="number" v-model.number="numb"/>
-      <button @click="addNumb">ADD</button>
-    </div>
   </div>
 </template>
 

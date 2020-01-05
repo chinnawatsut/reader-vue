@@ -105,8 +105,7 @@ export default {
           .then(() => {
             this.$router.push({ name: "home" });
           })
-          .catch(e => {
-            console.log(e.response);
+          .catch(() => {
           });
       }
     }
