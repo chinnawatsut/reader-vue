@@ -17,7 +17,7 @@
           placeholder="****"
         />
         <p v-if="error">{{error}}</p>
-        <button class="btn btn-primary">Login</button>
+        <button id="loginBtn" class="btn btn-primary">Login</button>
       </form>
     </div>
   </div>

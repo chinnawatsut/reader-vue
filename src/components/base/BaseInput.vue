@@ -16,7 +16,7 @@ export default {
     value: [String, Number]
   },
   methods: {
-    updateValue() {
+    updateValue(event) {
       this.$emit("input", event.target.value);
     }
   },
