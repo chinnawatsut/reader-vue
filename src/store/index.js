@@ -28,12 +28,12 @@ export default new Vuex.Store({
         if (err.response.status === 401) {
           dispatch('logout')
         }
+        return Promise.reject(err)
       });
     },
     logout({ commit }) {
       commit("SET_USER", null)
       LocalStorage.removeToken()
-      location.reload()
     },
     login({ commit }, credential) {
       return AuthApi.login(credential).then(response => {
@@ -41,7 +41,7 @@ export default new Vuex.Store({
         LocalStorage.setToken(response.data.token);
       })
       .catch(err => {
-        throw err
+        return Promise.reject(err)
       });
     }
   },

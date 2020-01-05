@@ -5,8 +5,7 @@ import Login from "../views/Login.vue";
 import CreateReview from "../views/CreateReview"
 import ShowReview from "../views/ShowReview"
 import EditReview from "../views/EditReview"
-
-import localStorage from '../services/localStorage';
+import store from '../store/index'
 
 Vue.use(VueRouter);
 
@@ -29,12 +28,18 @@ const routes = [
     name: "showReview",
     component: ShowReview,
     props: true,
+    meta: {
+      isAuth: true,
+    }
   },
   {
     path: "/reviews/:reviewId/edit",
     name: "editReview",
     component: EditReview,
     props: true,
+    meta: {
+      isAuth: true,
+    }
   },
   {
     path: "/reviews/create",
@@ -54,11 +59,15 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-  let token = localStorage.getToken()
+  let profile = store.state.profile
   const requiresAuth = to.matched.some(record => record.meta.isAuth)
 
-  if (requiresAuth && !token) {
-    next({ name: "login" })
+  if (requiresAuth && !profile) {
+    store.dispatch('getProfile').then(() => {
+      next()
+    }).catch(() => {
+      next({ name: "login" })
+    })
   } else {
     next()
   }

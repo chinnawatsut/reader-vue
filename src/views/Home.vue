@@ -33,7 +33,6 @@ export default {
   },
   created() {
     this.fetchReviews();
-    this.getProfile();
   },
   mounted() {},
   methods: {
@@ -41,9 +40,6 @@ export default {
       ReviewAPI.getReviews().then(response => {
         this.reviews = response.data;
       });
-    },
-    getProfile() {
-      this.$store.dispatch('getProfile')
     }
   }
 };

@@ -13,13 +13,12 @@
 </template>
 
 <script>
-import localStorage from "../services/localStorage";
 import { mapState } from 'vuex'
 
 export default {
   methods: {
     logout() {
-      localStorage.removeToken();
+      this.$store.dispatch('logout')
       location.reload();
     }
   },

@@ -17,5 +17,11 @@ function configAuth(config) {
   return config
 }
 
+httpClient.interceptors.request.use(response => response, error => {
+  if (error.response.status === 401) {
+    store.dispatch('logout')
+  }
+  return Promise.reject(error)
+})
 
 export default httpClient
