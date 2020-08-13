@@ -14,21 +14,24 @@ pipeline {
     //     sh 'npm run test:unit'
     //   }
     // }
-    stage('Build Image') {
-      steps {
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
+    // stage('Build Image') {
+    //   steps {
+    //     script {
+    //       dockerImage = docker.build registry + ":$BUILD_NUMBER"
+    //     }
+    //   }
+    // }
     stage('Deploy Image') {
       steps {
-        script {
+        sh 'docker -v'
+
+
+        // script {
          
-          docker.withRegistry('https://registry.hub.docker.com',  withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'worgate', passwordVariable: 'H@ppy2hahaha')]) ) {
-            dockerImage.push()
-          }
-        }
+        //   docker.withRegistry('https://registry.hub.docker.com',  withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'worgate', passwordVariable: 'H@ppy2hahaha')]) ) {
+        //     dockerImage.push()
+        //   }
+        // }
       }
     }
     stage('Remove Unused docker image') {
