@@ -7,13 +7,13 @@ pipeline {
     dockerImage = ''
   }
   stages {
-    stage('Test') {
-      agent { docker { image 'node:12-alpine' } }
-      steps {
-        sh 'npm install'
-        sh 'npm run test:unit'
-      }
-    }
+    // stage('Test') {
+    //   agent { docker { image 'node:12-alpine' } }
+    //   steps {
+    //     sh 'npm install'
+    //     sh 'npm run test:unit'
+    //   }
+    // }
     stage('Build Image') {
       steps {
         script {
