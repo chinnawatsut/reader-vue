@@ -23,7 +23,7 @@ pipeline {
     // }
     stage('Deploy Image') {
       steps {
-        sh 'docker build -t ' + "$registry" + ":$BUILD_NUMBER"
+        sh 'docker build -t ' + "$registry" + ":$BUILD_NUMBER ."
         sh 'docker images'
 
 
