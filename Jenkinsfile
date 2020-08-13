@@ -7,9 +7,9 @@ pipeline {
         docker { image 'node:12-alpine' }
       }
       steps {
-        sh 'node -v'
-        sh 'npm -v'
-        echo 'Building...'
+        sh 'npm install'
+        sh 'npm run build'
+        sh 'ls'
       }
     }
     stage('Test') {
