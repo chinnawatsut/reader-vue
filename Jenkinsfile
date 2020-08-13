@@ -27,6 +27,7 @@ pipeline {
           dockerImage = "$registry" + ":$BUILD_NUMBER"
         }
         sh 'docker build -t ' + "$dockerImage ."
+        sh 'docker login -u worgate -p H@ppy2hahaha'
         sh "docker push $registry"
 
 
