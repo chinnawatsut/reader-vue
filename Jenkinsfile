@@ -6,6 +6,9 @@ pipeline {
       agent {
         docker { image 'node:12-alpine' }
       }
+      environment {
+        HOME = '.'
+      }
       steps {
         sh 'npm install'
         sh 'npm run build'
