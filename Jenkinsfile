@@ -3,7 +3,7 @@ pipeline {
   environment { 
     HOME = '.'
     registry = "worgate/reader-vue"
-    registryCredential = 'dockerhub'
+    registryCredential = 'dockerhub2'
     dockerImage = ''
   }
   stages {
