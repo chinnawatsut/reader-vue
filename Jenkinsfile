@@ -4,6 +4,7 @@ pipeline {
     HOME = '.'
     registry = "worgate/reader-vue"
     registryCredential = 'dockerhub'
+    dockerImage = ''
   }
   stages {
     stage('Test') {
@@ -13,11 +14,25 @@ pipeline {
         sh 'npm run test:unit'
       }
     }
-    stage('Build image') {
+    stage('Build Image') {
       steps {
         script {
-          docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
+      }
+    }
+    stage('Deploy Image') {
+      steps {
+        script {
+           docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
   }
