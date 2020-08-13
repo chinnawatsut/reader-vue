@@ -7,12 +7,12 @@ pipeline {
       steps {
         sh 'npm install'
         sh 'npm run build'
-        sh 'ls'
       }
     }
     stage('Test') {
+      agent { docker { image 'node:12-alpine' } }
       steps {
-        echo 'Testing...'
+        sh 'npm run test:unit'
       }
     }
     stage('Deploy') {
