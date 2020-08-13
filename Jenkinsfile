@@ -7,8 +7,8 @@ pipeline {
         docker { image 'node:12-alpine' }
       }
       steps {
-        echo 'node -v'
-        echo 'npm -v'
+        sh 'node -v'
+        sh 'npm -v'
         echo 'Building...'
       }
     }
