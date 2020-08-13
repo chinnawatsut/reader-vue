@@ -1,6 +1,10 @@
 pipeline {
   agent any
-  environment { HOME = '.' }
+  environment { 
+    HOME = '.'
+    registry = "worgate/reader-vue"
+    registryCredential = 'dockerhub'
+  }
   stages {
     stage('Build') {
       agent { docker { image 'node:12-alpine' } }
@@ -15,9 +19,11 @@ pipeline {
         sh 'npm run test:unit'
       }
     }
-    stage('Deploy') {
+    stage('Build image') {
       steps {
-        echo 'Deploying'
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
       }
     }
   }
